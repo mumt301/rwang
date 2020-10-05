@@ -1,0 +1,360 @@
+<html>
+  <head>
+    <title>Assignment4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+    <body onLoad="displayTable();">
+      <h1 style="text-align:left">Comparison of Compression Algorithms</h1>
+      <br>
+        <div id="table" class="container"></div>
+                
+        <script>
+          let comparison_table = [{
+            'filename': 'filename',
+            'compression algorithm': 'compression algorithm',
+            'bit-rate': "bit-rate",
+            'original size':'original size',
+            'compressed size':'compressed size',
+            'compression ratio':'compression ratio',
+            'link to orginal audio':'link to original audio',
+            'link to compressed audio':'link to compressed audio',
+            'link to residual audio':'link to residual audio'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'MP3',
+            'bit-rate': "96kbps",
+            'original size':'10.7MB',
+            'compressed size':'726KB',
+            'compression ratio':'0.06',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="Distance96mp3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceMP396.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'MP3',
+            'bit-rate': "128kbps",
+            'original size':'10.7MB',
+            'compressed size':'968KB',
+            'compression ratio':'0.08',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="Distance128mp3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceMP3128.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'MP3',
+            'bit-rate': "192kbps",
+            'original size':'10.7MB',
+            'compressed size':'1.5MB',
+            'compression ratio':'0.14',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="Distance192mp3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceMP3192.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'MP3',
+            'bit-rate': "320kbps",
+            'original size':'10.7MB',
+            'compressed size':'2.4KB',
+            'compression ratio':'0.22',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="Distance320mp3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceMP3320.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'AC3',
+            'bit-rate': "96kbps",
+            'original size':'10.7MB',
+            'compressed size':'725KB',
+            'compression ratio':'0.06',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceAC396.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceAC396.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'AC3',
+            'bit-rate': "128kbps",
+            'original size':'10.7MB',
+            'compressed size':'967KB',
+            'compression ratio':'0.08',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceAC3128.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceAC3128.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'AC3',
+            'bit-rate': "192kbps",
+            'original size':'10.7MB',
+            'compressed size':'1.5MB',
+            'compression ratio':'0.14',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceAC3192.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceAC3192.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'AC3',
+            'bit-rate': "320kbps",
+            'original size':'10.7MB',
+            'compressed size':'2.4MB',
+            'compression ratio':'0.22',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceAC3320.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceAC3320.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'M4A',
+            'bit-rate': "96kbps",
+            'original size':'10.7MB',
+            'compressed size':'783KB',
+            'compression ratio':'0.07',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceM4A96.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceM4A96.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'M4A',
+            'bit-rate': "128kbps",
+            'original size':'10.7MB',
+            'compressed size':'1MB',
+            'compression ratio':'0.09',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceM4A128.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceM4A128.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'M4A',
+            'bit-rate': "192kbps",
+            'original size':'10.7MB',
+            'compressed size':'1.5MB',
+            'compression ratio':'0.14',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceM4A192.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceM4A192.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'M4A',
+            'bit-rate': "320kbps",
+            'original size':'10.7MB',
+            'compressed size':'2.5MB',
+            'compression ratio':'0.23',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceM4A320.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceM4A320.wav">residual audio</a>'
+          }, {
+            'filename': 'song1',
+            'compression algorithm': 'OGG',
+            'bit-rate': "3",
+            'original size':'10.7MB',
+            'compressed size':'729KB',
+            'compression ratio':'0.06',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceVorbis3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceVorbis3.wav">residual audio</a>'
+          }, {'filename': 'song1',
+            'compression algorithm': 'OGG',
+            'bit-rate': "5",
+            'original size':'10.7MB',
+            'compressed size':'986KB',
+            'compression ratio':'0.09',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceVorbis5.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceVorbis5.wav">residual audio</a>'
+            }, {
+              'filename': 'song1',
+            'compression algorithm': 'OGG',
+            'bit-rate': "7",
+            'original size':'10.7MB',
+            'compressed size':'3.1MB',
+            'compression ratio':'0.28',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceVorbis7.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceVorbis7.wav">residual audio</a>'
+            }, {
+              'filename': 'song1',
+            'compression algorithm': 'OGG',
+            'bit-rate': "10",
+            'original size':'10.7MB',
+            'compressed size':'10.7MB',
+            'compression ratio':'1',
+            'link to orginal audio':'<a href="DistanceWAV.wav">original audio</a>',
+            'link to compressed audio':'<a href="DistanceVorbis10.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RDistanceVorbis10.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'AC3',
+            'bit-rate': "96kbps",
+            'original size':'10.6MB',
+            'compressed size':'723KB',
+            'compression ratio':'0.06',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="ElectronicAC396.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RElectronicAC396.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'AC3',
+            'bit-rate': "128kbps",
+            'original size':'10.6MB',
+            'compressed size':'964KB',
+            'compression ratio':'0.08',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="ElectronicAC3128.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RElectronicAC3128.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'AC3',
+            'bit-rate': "192kbps",
+            'original size':'10.6MB',
+            'compressed size':'1.4MB',
+            'compression ratio':'0.13',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="ElectronicAC3192.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RElectronicAC3192.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'AC3',
+            'bit-rate': "320kbps",
+            'original size':'10.6MB',
+            'compressed size':'2.4MB',
+            'compression ratio':'0.22',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="ElectronicAC3320.wav">compressed audio</a>',
+            'link to residual audio':'<a href="RElectronicAC3320.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'M4A',
+            'bit-rate': "96kbps",
+            'original size':'10.6MB',
+            'compressed size':'781KB',
+            'compression ratio':'0.07',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="em4a96.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rem4a96.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'M4A',
+            'bit-rate': "128kbps",
+            'original size':'10.6MB',
+            'compressed size':'1MB',
+            'compression ratio':'0.09',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="em4a128.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rem4a128.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'M4A',
+            'bit-rate': "192kbps",
+            'original size':'10.6MB',
+            'compressed size':'1.5MB',
+            'compression ratio':'0.14',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="em4a192.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rem4a192.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'M4A',
+            'bit-rate': "320kbps",
+            'original size':'10.6MB',
+            'compressed size':'2.5MB',
+            'compression ratio':'0.24',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="em4a320.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rem4a320.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'MP3',
+            'bit-rate': "96kbps",
+            'original size':'10.6MB',
+            'compressed size':'723KB',
+            'compression ratio':'0.07',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicmp396.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicmp396.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'MP3',
+            'bit-rate': "128kbps",
+            'original size':'10.6MB',
+            'compressed size':'965KB',
+            'compression ratio':'0.09',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicmp3128.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicmp3128.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'MP3',
+            'bit-rate': "192kbps",
+            'original size':'10.6MB',
+            'compressed size':'1.4MB',
+            'compression ratio':'0.13',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicmp3192.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicmp3192.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'MP3',
+            'bit-rate': "320kbps",
+            'original size':'10.6MB',
+            'compressed size':'2.4MB',
+            'compression ratio':'0.23',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicmp3320.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicmp3320.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'OGG',
+            'bit-rate': "3",
+            'original size':'10.6MB',
+            'compressed size':'761KB',
+            'compression ratio':'0.07',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicogg3.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicogg3.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'OGG',
+            'bit-rate': "5",
+            'original size':'10.6MB',
+            'compressed size':'1MB',
+            'compression ratio':'0.09',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicogg5.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicogg5.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'OGG',
+            'bit-rate': "7",
+            'original size':'10.6MB',
+            'compressed size':'1.3MB',
+            'compression ratio':'0.12',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicogg7.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicogg7.wav">residual audio</a>'
+            }, {
+              'filename': 'song2',
+            'compression algorithm': 'OGG',
+            'bit-rate': "10",
+            'original size':'10.6MB',
+            'compressed size':'2.8MB',
+            'compression ratio':'0.26',
+            'link to orginal audio':'<a href="Electronic.wav">original audio</a>',
+            'link to compressed audio':'<a href="Electronicogg10.wav">compressed audio</a>',
+            'link to residual audio':'<a href="rElectronicogg10.wav">residual audio</a>'
+            }]
+      
+          function displayTable() {
+            let table = document.createElement('table');
+            table.id = "beatles_table"
+            for (row = 0; row < comparison_table.length; row++) {
+              tr = document.createElement('tr');
+              let columns = Object.keys(comparison_table[row]);
+              for (col = 0; col < columns.length; col++) {
+                td = document.createElement('td');
+                tr.appendChild(td);
+                td.innerHTML = comparison_table[row][columns[col]];
+              }
+              table.appendChild(tr);
+            }
+            document.getElementById("table").appendChild(table);
+          }
+        </script>
+      </body>
+</html>
