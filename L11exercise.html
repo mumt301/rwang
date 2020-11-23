@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>
+            Last.fm API call
+        </title>
+        <link rel="stylesheet" href="https://minicss.org/flavorFiles/mini-default.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Type the name of an artist you love</h1>
+
+        <!-- Step 2: Create the form-->
+        <form method="GET">
+                <label for="artist">Artist name:</label>
+                <input type="text" name="artistName" id="artist">
+                <br>
+                <input type="submit">
+        </form>
+
+        <!-- Placeholder for results-->
+        <div id="bioContainer"></div>
+
+        <!-- Step 3: Retrive the artist name data submitted through the form -->
+        <script type="text/Javascript">
+            // Global variables
+            const apiKey = "a332a083bc9b65bddb51288dcf7cee13";
+
+            function queryArtist() {
+                let params = (new URL(document.location)).searchParams;
+                if (params.has('artistName')){
+                    let artistName = params.get('artistName');
+                    console.log(artistName);
+
+                    // Step 4: Check the Last.fm API call and response to get information about an Artist 
+                    // Crafting the API call/message 
+                    let queryURL = "http://ws.audioscrobbler.com/2.0" + "?method=" + 
+                    "artist.getinfo" + "&artist=" + artistName + "&api_key=" + apiKey; 
+                    console.log(queryURL); 
+
+                    // Step 5: Making the request
+                    httpGet(queryURL, getBioAndImage)
+                }
+            }
+
+            // Step 5: Make the request
+            function httpGet(theURL, cbFunction){
+                // Create a new XMLHttpRequest object 
+                let xmlHttp = new XMLHttpRequest();
+                //Specify the request method and the URL, and send the request to the server 
+                xmlHttp.open('GET', theURL)
+                xmlHttp.send(); 
+
+                // Wait for the responseto be ready
+                xmlHttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // When the response is ready, call the callback function
+                        // to parse the response and render the corresponding results 
+                        cbFunction(this); 
+                    }
+                }
+
+            }
+
+            // Step 6: Parse the results in the callback function 
+            function getBioAndImage (xhttp) {
+                // Get the response and store it in a variable 
+                let retrievedData = xhttp.responseXML; 
+                console.log(retrievedData);
+
+                // Parsing the response 
+                let artistMBID = retrievedData.getElementsByTagName('mbid')[0].innerHTML;
+                console.log(artistMBID)
+                let bioContent = retrievedData.getElementsByTagName('content')[0].innerHTML;
+                console.log(bioContent);
+
+                // Step 7: Display results 
+                // (add a placeholder element in the HTML code and then append the result to the DOM)
+                let infobox = document.getElementById('bioContainer');
+                let bio = document.createElement('p');
+                bio.innerHTML = bioContent;
+                infobox.appendChild(bio);
+
+                // Make a query for the image
+                // (Step 4 -- for the image)
+                let queryURL2 = "http://ws.audioscrobbler.com/2.0" + "?method=" + 
+                "artist.gettopalbums" + "&mbid=" + artistMBID + "&api_key=" + apiKey; 
+                console.log(queryURL2); 
+
+                // (Step 5 -- for the image)
+                httpGet(queryURL2, getImage)
+
+            }
+
+            function getImage(xhttp){
+                // Get the response and store it in a variable 
+                let retrievedData2 = xhttp.responseXML; 
+                console.log(retrievedData2);
+
+                // Parsing the response
+                let imageURL = retrievedData2.getElementsByTagName('image')[3].innerHTML;
+                console.log(imageURL);
+
+                // (Step 7 - Append the results to the DOM for the image) 
+                let infobox = document.getElementById('bioContrainer');
+                let image = document.createElement('img');
+                image.src = imageURL;
+                infobox.appendChild(image);
+            }
+
+            window.onload = queryArtist;
+        </script>
+    </body>
+</html>

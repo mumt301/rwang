@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MusicBrainz API Call</title>
+        <link rel="stylesheet" href="https://minicss.org/flavorFiles/mini-default.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div>
+            <h2>Basic call to the MusicBrainz API</h2>
+            <p>Retreive MBID and country for a given user-entered artist</p>
+
+            <!-- Step1: create the form-->
+            <form method="GET">
+                <label for="name">Artist name?</label>
+                <input type="text" name="artist" id="name">
+                <input type="submit" value="Get MBID!">
+            </form>
+
+            <!-- Placeholder element for step 6 - rendering the data in the browser -->
+            <p id="placeholder"></p>
+        </div>
+
+        <script type="text/JavaScript">
+            /* Main function
+            Function that takes care of everything and it calls any other auxiliary functions*/
+            function queryArtist() {
+                //step 2: Parse the data submitted through the form
+                //In other words, get the parameters from the URL (@name = 'artist')
+                let params = (new URL(document.location)).searchParams;
+                if (params.has('artist')) {
+                    let artistName = params.get('artist');
+                    console.log(artistName);
+
+                    //step 3: craft the MusicBrainz call/message for requesting info about 
+                    // the arist
+                    // get request: 'search'
+                    let mbBaseURL = "https://musicbrainz.org/ws/2";
+                    let mbResource = "artist?query=";
+                    let queryURL = mbBaseURL + mbResource + artistName;
+                    console.log(queryURL);
+
+                    // Step 4-6 
+                    httpGet(queryURL, getMBID);
+                    
+                    
+                }
+            }
+
+            /*
+                Auxiliary functions
+                - httpGet, funcion for executing the XMLHttpRequest object
+                - callback function to parse each response 
+            */
+
+            function httpGet(theURL, cbFunction){
+                // Step 4: make the http request call to MusicBrainz 
+
+                // Creates a new XMLHttpRequest object 
+                let xmlHttp = new XMLHttpRequest();
+
+                // Specify the request method and URL of the request, 
+                // and send the request to the server 
+                xmlHttp.open("GET", theURL);
+                xmlHttp.send();
+
+                //Wait for the response to be ready and store it in a variable 
+                xmlHttp.onreadystatechange = function () {
+                    //Define a function to be called when the readyState property changes
+                    if (this.readyState == 4 && this.status == 200) {
+                        cbFunction(this);
+                        
+                    }
+                };
+            }
+
+            // 1st callback function 
+            function getMBID(xhttp) {
+                let retrievedData = xhttp.responseXML;
+                console.log(retreivedData);
+                // Code for parsing the response (step 5)
+                let artistData = retrievedData.getElementsByTagName('artist')[0];
+                let artistMBID = artistData.id;
+                console.log(artistMBID);
+                let artistCountry = artistData.getElementsByTagName('country')[0].innerHTML;
+                console.log(artistCountry);
+                let artistName = artistData.getElementsByTagName('name')[0].innerHTML;
+                console.log(artistName);
+
+                let mbBaseURL = "https://musicbrainz.org/ws/2";
+                let mbResource = "";
+                let queryURL2 = mbBaseURL + mbResource + artistName;
+                console.log(queryURL2);
+
+                httpGet(queryURL2, getAlbums)
+                /*
+                // Code for rendering the results (step 6)
+                let placeholder = document.getElementById('placeholder');
+                placeholder.innerHTML = `For ${artistName} the MusicBrainz ID is ${artistMBID} and the country is ${artistCountry}`;
+                */
+            }
+            // 2nd callback function 
+            getAlbums(xhttp) {
+                //Get the response
+                //Process the response 
+            }
+
+            window.onload = queryArtist;
+        </script>
+    </body>
+</html>

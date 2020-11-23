@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <title>assignment7</title>
+        <link rel="stylesheet" href="https://minicss.org/flavorFiles/mini-default.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body>
+        <h1>Type a track you love to look for similar music: </h1>
+
+        <!-- Step 2: Create a form to enter the name of a track and the name of its artist -->
+        <form>
+            <label for="track">Track:</label>
+            <input type="text" name="trackName" id="track">
+            <br>
+            <label for="artist">Artist:</label>
+            <input type="text" name="artistName" id="artist">
+            <br>
+            <input type="submit">
+        </form>
+
+        <!-- placeholder for results to be rendered in step 7 -->
+        <div id="bioContainer"></div>
+
+
+        <script type="text/JavaScript">
+        	
+        	const apiKey = "a332a083bc9b65bddb51288dcf7cee13"; // Use your own API Key
+        	// This variable has been defined globally rather than within a function, since more than one function uses it
+
+            function queryArtist() {
+            	// Step 3: Retrieve the data submitted through the form
+                let params = (new URL(document.location)).searchParams;
+                if (params.has('artistName')) {
+                    let artistName = params.get('artistName');
+                    console.log(artistName);
+
+                    let trackName = params.get('trackName');
+                    console.log(trackName);
+
+                    // Step 4: Check the Last.fm API call and response to get information about an 'artist'
+                    // Crafting the API call/message
+                    let queryURL = "https://ws.audioscrobbler.com/2.0/" + "?method=artist.getsimilar&artist=" + artistName + "&track=" + trackName + "&api_key=" + apiKey;
+                    console.log(queryURL);
+
+                    // Step 5: Make the request 
+                    // (Use last class's httpGet function with the given URL and a callback function for processig the response)
+                    httpGet(queryURL, getBioAndImage);
+                }
+            }
+
+            // Step 5: Make the request 
+            function httpGet(theURL, cbFunction) {
+                // Create a new XMLHttpRequest object
+                let xmlHttp = new XMLHttpRequest();
+                // Specify the request method and URL, and send the request to the server
+                xmlHttp.open("GET", theURL);
+                xmlHttp.send();
+
+                // Wait for the response to be ready
+                xmlHttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // when the response is ready, call the callback function
+                        // to parse the response and render the coresponding results
+                        cbFunction(this); 
+                    }
+                };
+            }
+
+            // Step 6: Parse the results in the callback function
+            function getBioAndImage(xhttp) {
+
+                // Get the response and store it in a variable
+                let retrievedData = xhttp.responseXML;
+                console.log(retrievedData);
+
+                // Parse the response
+                let artistList = retrievedData.getElementsByTagName("artist");
+                console.log(artistList); 
+
+
+                // Step 7: Display the results 
+                // (add a placeholder element in the HTML code and append the results to the DOM)
+                let infobox = document.getElementById("bioContainer");
+                let bio = document.createElement("p");
+                for (i=0; i<5; i++) {
+                    let artistMBID = artistList[i].getElementsByTagName("mbid")[0].innerHTML;
+                    console.log(artistMBID);
+
+                    let queryURL2 = "https://ws.audioscrobbler.com/2.0/" + "?method=artist.getInfo&mbid=" + artistMBID + "&api_key=" + apiKey;
+                    console.log(queryURL2);
+                    httpGet(queryURL2, getDescription);
+
+                    let queryURL3 = "https://ws.audioscrobbler.com/2.0/" + "?method=artist.gettopalbums&mbid=" + artistMBID + "&api_key=" + apiKey;
+                    console.log(queryURL3);
+                    httpGet(queryURL3, getImage)
+                }
+
+            }
+
+            function getDescription(xhttp) {
+
+                // Get the response and store it in a variable
+                let retrievedData2 = xhttp.responseXML;
+                console.log(retrievedData2);
+
+                // Parse the response
+                let artist = retrievedData2.getElementsByTagName("artist")[0];
+                console.log(artist);
+
+                let bio = artist.getElementsByTagName("bio")[0];
+                console.log(bio);
+
+                let summary = bio.getElementsByTagName("summary")[0].innerHTML;
+                console.log(summary);
+
+                let infobox = document.getElementById("bioContainer");
+                let image = document.createElement("p");
+                description.innerHTML = summary;
+                infobox.appendChild(description);
+            }
+
+        function getImage(xhttp) {
+            // Get the response and store it in a variable 
+            let retrievedData3 = xhttp.responseXML;
+            console.log(retrievedData3);
+
+            // Parse the response 
+            let imageURL = retrievedData3.getElementsByTagName("image")[3].innerHTML;
+            console.log(imageURL);
+
+            // (Step 7 - Append the results to the DOM for the image)
+            let infobox = document.getElementById("bioContainer");
+            let image = document.createElement("image");
+            image.src = imageURL;
+            infobox.appendChild(image);
+
+        }
+
+            window.onload = queryArtist;
+        </script>
+        <p style="color:black;">
+            <a href="assignment.html">back to assignments</a>
+        </p>
+    </body>
+</html>
